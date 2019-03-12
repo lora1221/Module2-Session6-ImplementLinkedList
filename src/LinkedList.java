@@ -6,6 +6,7 @@ public class LinkedList<E> {
     }
     public LinkedList(Node<E> element) {
         head = element;
+        tail = element;
         numNode ++;
     }
 
@@ -13,6 +14,7 @@ public class LinkedList<E> {
         Node current = new Node(element);
         if (head == null) {
             head = current;
+            tail = current;
         } else {
             current.next= head;
             head = current;
@@ -25,12 +27,9 @@ public class LinkedList<E> {
         if (head == null) {
             head = newNode;
         } else {
-            Node current = head;
-            while(current.next != null) {
-                current = current.next;
-            }
-            current.next = newNode;
+            tail.next = newNode;
         }
+        tail = newNode;
         numNode++;
     }
 
@@ -47,7 +46,6 @@ public class LinkedList<E> {
             Node temp = current.next;
             current.next = new Node(element);
             (current.next).next = temp;
-
         }
         numNode++;
     }
@@ -69,6 +67,7 @@ public class LinkedList<E> {
         } else if (numNode == 1) {
             Node current = head;
             head = null;
+            tail = null;
             numNode --;
             return (E)current;
         } else {
@@ -80,9 +79,10 @@ public class LinkedList<E> {
             }
             previous.next = null;
             numNode--;
-            return (E)current;
+            return (E)current.element;
         }
     }
+
     public E remove(int index) {
         if (index < 0 || index >= numNode) {
             return null;
@@ -98,12 +98,13 @@ public class LinkedList<E> {
             Node temp = previous.next;
             previous.next = temp.next;
             numNode --;
-            return (E) temp;
+            return (E) temp.element;
         }
     }
     public int size(){
         return numNode;
     }
+
     public boolean contains(E element) {
         if (numNode == 0) {
             return false;
@@ -118,6 +119,7 @@ public class LinkedList<E> {
             return false;
         }
     }
+
     public int indexOf(E element) {
         if (numNode == 0) {
             return -1;
@@ -132,5 +134,44 @@ public class LinkedList<E> {
             return -1;
         }
     }
+
+    public void clear(){
+        Node current = head;
+        while(head != null) {
+            current = null;
+            head = head.next;
+            current = head;
+        }
+        numNode = 0;
+    }
+    public E getFirst(){
+        if (head == null) {
+            return null;
+        } else {
+            return head.element;
+        }
+    }
+
+    public E getLast(){
+        if (head == null) {
+            return null;
+        } else {
+            return tail.element;
+        }
+    }
+
+    public void printOut() {
+        if (head == null) {
+            System.out.println("EMPTY LIST");
+        } else {
+            Node current = head;
+            while (current.next != null) {
+                System.out.print(current.element + " ");
+                current = current.next;
+            }
+            System.out.println(current.element);
+        }
+    }
+
 
 }
